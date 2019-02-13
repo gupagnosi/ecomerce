@@ -160,7 +160,7 @@ $app->get("/admin/forgot/sent", function (){
 });
 /* ---------------------------FIM ESQUECEU SENHA */
 // INICIO CATEGORIAS
-
+//INICIO CRUD
 $app->get('/admin/categories', function(){
 
 	User::verifyLogin();
@@ -248,7 +248,17 @@ $app->post('/admin/categories/:idcategory', function($idcategory){
 
 });
 //FIM CRUD CATEGORIES
+$app->get("/categories/:idcategory", function($idcategory){
+	$category = new Category();
+	$category->get((int)$idcategory);
 
+	$page = new Page();
+
+	$page->setTpl("category",[
+		'category'=> $category->getData(),// category é a variavel pra usar no html pelo raintpl
+		'products'=>[]
+	]);
+});
 $app->run();
 
  ?>
